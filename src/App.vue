@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <h2>App</h2>
-    <router-link to="/main">主要</router-link>
-    <router-link to="/login">登录</router-link>
+  <div class="app">
     <router-view></router-view>
   </div>
 </template>
 <script setup lang="ts"></script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.app {
+  width: 100vw;
+  height: 100vh;
+}
+</style>
