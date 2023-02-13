@@ -13,7 +13,11 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from "vue" 
+import { ElMessage } from 'element-plus'
 import type {FormRules, ElForm} from 'element-plus'
+
+import {accountLogin} from '@/service/login/index'
+import useLoginStore from '@/stores/login/login'
 
 const formRef = ref<InstanceType<typeof ElForm>>();
 
@@ -34,9 +38,19 @@ const rules = reactive<FormRules>({
         }
     ]
 })
+const loginStore = useLoginStore();
 
 function handleLogin() {
-    console.log(formLabel.name, formLabel.password);
+    if(!formRef.value) return;
+    formRef.value?.validate((valid)=>{
+        if(valid){
+            const {name, password} = formLabel;
+            loginStore.accountLoginAction({name, password});
+        }else{
+            ElMessage.error('用户名/密码错误')
+            return false;
+        }
+    })
 }
 
 defineExpose({
